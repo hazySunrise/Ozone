@@ -1,8 +1,6 @@
 package com.jimi.ozone_server.model.vo;
 
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.jimi.ozone_server.model.sql.SQL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.List;
 public class DisplayVO {
 
     private  Integer id;
-
 
     private String groupName;
 
@@ -32,7 +29,6 @@ public class DisplayVO {
         this.id = id;
     }
 
-
     public String getGroupName() {
         return groupName;
     }
@@ -48,14 +44,10 @@ public class DisplayVO {
             int groupId=record.getInt("id");
             displayVO.setId(groupId);
             displayVO.setGroupName(record.getStr("name"));
-            List<Record> staffList= Db.find(SQL.SELECT_STAFF_BY_GROUPID,groupId);
-            List<StaffVO> staffVOS=StaffVO.fillList(staffList);
-            displayVO.setStaffList(staffVOS);
+            displayVO.setStaffList(record.get("staffList"));
             displayVOs.add(displayVO);
         }
         return displayVOs;
     }
-
-
 
 }

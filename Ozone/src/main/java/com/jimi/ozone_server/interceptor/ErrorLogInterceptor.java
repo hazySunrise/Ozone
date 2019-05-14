@@ -4,7 +4,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jimi.ozone_server.exception.ExceptionManager;
 import com.jimi.ozone_server.util.ErrorLogger;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,7 @@ public class ErrorLogInterceptor implements Interceptor {
 			invocation.invoke();
 		}catch (Exception e) {
 			ErrorLogger.logError(logger, e);
-			invocation.getController().renderJson(ResultUtil.failed(ExceptionManager.getResultCode(e), e.getMessage()));
+			invocation.getController().renderJson(ResultFactory.failed(ExceptionManager.getResultCode(e), e.getMessage()));
 		}
 	}
 

@@ -5,26 +5,26 @@ import com.jfinal.core.Controller;
 import com.jimi.ozone_server.annotation.Log;
 import com.jimi.ozone_server.exception.ParameterException;
 import com.jimi.ozone_server.service.DisplayService;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 
 /*
  * 主页面显示管理控制层
  */
 public class DisplayController extends Controller {
 
-    private  static DisplayService displayService=  Enhancer.enhance(DisplayService.class);
+    private  static DisplayService displayService=Enhancer.enhance(DisplayService.class);
 
-    @Log("人力资源界面显示")
+    @Log("显示人力资源界面")
     public  void  resource(){
-        renderJson(ResultUtil.succeed(displayService.resource()));
+        renderJson(ResultFactory.succeed(displayService.resource()));
     }
 
-    @Log("甘特图显示")
+    @Log("获取项目id为{projectId}的甘特图显示")
     public  void ganttChart(Integer projectId){
         if (projectId==null){
             throw  new ParameterException("参数不能为空");
         }
-        renderJson(ResultUtil.succeed(displayService.ganttChart(projectId)));
+        renderJson(ResultFactory.succeed(displayService.ganttChart(projectId)));
     }
 
 }

@@ -7,7 +7,7 @@ import com.jimi.ozone_server.model.Task;
 import com.jimi.ozone_server.model.TaskSchedule;
 import com.jimi.ozone_server.model.TaskType;
 import com.jimi.ozone_server.model.sql.SQL;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class TaskService {
 
-
     //增加任务
     public  void addTask(String name,Integer typeId){
         TaskType taskType=TaskType.dao.findById(typeId);
@@ -26,7 +25,7 @@ public class TaskService {
         }
         Task t=Task.dao.findFirst(SQL.SELECT_TASK_BY_TYPEID_AND_NAME,name,typeId); //判断任务是否已经存在
         if(t!=null){
-            throw  new OperationException("该任务在此任务类型下已存在");
+            throw new OperationException("该任务在此任务类型下已存在");
         }
         Task task=new Task();
         task.setName(name);
@@ -39,7 +38,7 @@ public class TaskService {
     public  void updateTask(Integer id,String name,Integer typeId){
         Task task=Task.dao.findById(id);
         if (task==null){
-            throw new  OperationException("该任务不存在");
+            throw new OperationException("该任务不存在");
         }
         TaskType taskType=TaskType.dao.findById(typeId);
         if (taskType==null){
@@ -47,7 +46,7 @@ public class TaskService {
         }
         Task t=Task.dao.findFirst(SQL.SELECT_TASK_ID_NOT,name,typeId,id); //判断任务是否已经存在
         if(t!=null){
-            throw  new OperationException("该任务在此任务类型下已存在");
+            throw new OperationException("该任务在此任务类型下已存在");
         }
         task.setName(name);
         task.setTypeId(Long.valueOf(typeId));
@@ -55,7 +54,7 @@ public class TaskService {
     }
 
     //增加任务安排
-    public ResultUtil addSchedule(String name,Integer typeId,Date beignTime,Date endTime,Date finishTime,String staffId,Integer projectId,String preTaskId){
+    public ResultFactory addSchedule(String name, Integer typeId, Date beignTime, Date endTime, Date finishTime, String staffId, Integer projectId, String preTaskId){
         Task task=Task.dao.findFirst(SQL.SELECT_TASK_BY_TYPEID_AND_NAME,name,typeId); //查找到新增加的任务
         Integer taskId=task.getInt("id");
         if (staffId!=null) {   //分割员工id，每个员工增加一条任务安排记录
@@ -93,12 +92,11 @@ public class TaskService {
                 preTask.save();
             }
         }
-        return ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
-
     //更新任务安排,先删后增
-    public  ResultUtil updateSchedule(Integer taskId,Date beignTime,Date endTime,Date finishTime,String staffId,Integer projectId,String preTaskId){
+    public ResultFactory updateSchedule(Integer taskId, Date beignTime, Date endTime, Date finishTime, String staffId, Integer projectId, String preTaskId){
         Db.delete(SQL.SELECT_SCHEDULE_BY_TASID,taskId);//根据任务id删除所有的任务安排记录
         if (staffId!=null) {
             String[] staffs = staffId.split(",");
@@ -136,9 +134,8 @@ public class TaskService {
                 preTask.save();
             }
         }
-        return ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
-
 
     //判断员工是否任务时间冲突
     public  boolean timeConflict(String  staffIds,Date beginTime,Date endTime){
@@ -158,14 +155,14 @@ public class TaskService {
     }
 
     //删除任务
-    public ResultUtil delete(Integer id){
+    public ResultFactory delete(Integer id){
         Task task =Task.dao.findById(id);
         if (task==null){
-            throw  new OperationException("任务不存在");
+            throw new OperationException("任务不存在");
         }
         task.setDeleted(true);
         task.update();
-        return  ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
     //任务安排冲突时，将原先添加成功的任务记录删除

@@ -3,7 +3,7 @@ package com.jimi.ozone_server.service;
 import com.jimi.ozone_server.exception.OperationException;
 import com.jimi.ozone_server.model.Group;
 import com.jimi.ozone_server.model.sql.SQL;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 
 import java.util.List;
 
@@ -49,6 +49,6 @@ public class GroupService {
 
     public List<Group> getList(){
        List<Group> groups=Group.dao.find(SQL.SELECT_ALL_GROUP);
-        return groups;
+       return groups;
     }
 }

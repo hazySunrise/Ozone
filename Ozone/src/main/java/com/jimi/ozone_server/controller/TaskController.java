@@ -6,7 +6,7 @@ import com.jimi.ozone_server.annotation.Log;
 import com.jimi.ozone_server.exception.OperationException;
 import com.jimi.ozone_server.exception.ParameterException;
 import com.jimi.ozone_server.service.TaskService;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 
 import java.util.Date;
 
@@ -14,15 +14,16 @@ import java.util.Date;
  * 任务管理控制层
  */
 public class TaskController extends Controller {
-    public  static TaskService taskService= Enhancer.enhance(TaskService.class);
+    public  static TaskService taskService=Enhancer.enhance(TaskService.class);
 
-    @Log("preTaskId为前置任务，多个时以\",\"隔开，staffId为员工id，多个时以\",\"隔开，多个时，force代表是否强制执行")
+    @Log("添加任务名为{name}，任务类型为{typeId}的任务；添加前置任务为{preTaskId}的前置任务；添加员工id为{staffId}，任务开始时间为{beginTime}，" +
+            "计划结束时间为{endTime}，实际任务完成时间为{finishTime}的时间安排记录；force值为{force}(0代表不强制执行，1代表强制执行添加操作")
     public  void add(String name, Integer typeId, Integer projectId,Boolean force,String preTaskId, Date beginTime,Date endTime,Date finishTime,String staffId){
         if(name==null||projectId==null||typeId==null||force==null){
             throw new ParameterException("参数不能为空");
         }
         taskService.addTask(name,typeId);//增加任务
-        ResultUtil tsResult;
+        ResultFactory tsResult;
         if (finishTime==null){
             if(staffId==null||beginTime==null||endTime==null){
                 tsResult=taskService.addSchedule(name,typeId,beginTime,endTime,finishTime,staffId,projectId,preTaskId);//增加任务安排
@@ -45,23 +46,24 @@ public class TaskController extends Controller {
         renderJson(tsResult);
     }
 
-    @Log("根据id逻辑删除任务")
+    @Log("对id为{id}的任务进行逻辑删除")
     public void delete(Integer id){
         if (id==null){
-            throw  new ParameterException("参数不能为空");
+            throw new ParameterException("参数不能为空");
         }
-        ResultUtil resultUtil=taskService.delete(id);
-        renderJson(resultUtil);
+        ResultFactory resultFactory =taskService.delete(id);
+        renderJson(resultFactory);
     }
 
 
-    @Log("更新任务，前置任务，任务安排记录")
+    @Log("更新id为{id}的任务，更新后任务名name为{name}，任务类型id为{typeId}；更新任务前置任务为{preTaskId}；更新任务安排记录，更新后员工的id为{staffId}，" +
+            "任务开始时间为{beginTime}， 计划结束时间为{endTime}，实际任务完成时间为{finishTime}的时间安排记录；；force值为{force}(0代表不强制执行，1代表强制执行添加操作")
     public void update(Integer id,String name, Integer typeId, Integer projectId,Boolean force,String preTaskId, Date beginTime,Date endTime,Date finishTime,String staffId){
         if (id==null||name==null||force==null||typeId==null||projectId==null){
-            throw new  OperationException("参数不能为空");
+            throw new OperationException("参数不能为空");
         }
         taskService.updateTask(id,name,typeId);
-        ResultUtil tsResult;
+        ResultFactory tsResult;
         if (finishTime==null){
             if(staffId==null||beginTime==null||endTime==null){
                 tsResult=taskService.updateSchedule(id,beginTime,endTime,finishTime,staffId,projectId,preTaskId);//更新任务安排
@@ -83,11 +85,11 @@ public class TaskController extends Controller {
         renderJson(tsResult);
     }
 
-    @Log("获取某个项目下所有的任务")
+    @Log("获取项目id为{projectId}下所有的任务，内容包括任务id和任务名称")
     public void getAllTask(Integer projectId){
         if (projectId==null){
-            throw new  ParameterException("参数不能为空");
+            throw new ParameterException("参数不能为空");
         }
-        renderJson(ResultUtil.succeed(taskService.getAllTask(projectId)));
+        renderJson(ResultFactory.succeed(taskService.getAllTask(projectId)));
     }
 }

@@ -1,13 +1,12 @@
 package com.jimi.ozone_server.model.vo;
 
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.jimi.ozone_server.model.sql.SQL;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StaffVO {
+
     private  int id;
 
     private String name;
@@ -39,19 +38,15 @@ public class StaffVO {
     }
 
     public static List<StaffVO> fillList(List<Record> records){
-        List<StaffVO> staffVOS=new ArrayList<>();
+        List<StaffVO> staffVOs=new ArrayList<>();
         for (Record record : records) {
             StaffVO staffVO=new StaffVO();
             int staffId=record.getInt("id");
             staffVO.setId(staffId);
             staffVO.setName(record.getStr("name"));
-            List<Record> ts= Db.find(SQL.SELECT_SCHEDULE_BY_STAFFID,staffId);
-            if (ts.size()!=0) {
-                List<ScheduleVO> taskList = ScheduleVO.fillList(ts);
-                staffVO.setTaskList(taskList);
-            }
-            staffVOS.add(staffVO);
+            staffVO.setTaskList(record.get("taskList"));
+            staffVOs.add(staffVO);
         }
-        return  staffVOS;
+        return  staffVOs;
     }
 }

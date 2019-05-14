@@ -27,13 +27,13 @@ public class TaskVO {
     }
 
     public static List<TaskVO> fillList(List<Record> records) {
-        List<TaskVO> taskVOS = new ArrayList<>();
+        List<TaskVO> taskVOs = new ArrayList<>();
         for (Record record : records) {
             TaskVO taskVO = new TaskVO();
             taskVO.setId(record.getInt("id"));
             taskVO.setName(record.getStr("name"));
-            taskVOS.add(taskVO);
+            taskVOs.add(taskVO);
         }
-        return taskVOS;
+        return taskVOs;
     }
 }

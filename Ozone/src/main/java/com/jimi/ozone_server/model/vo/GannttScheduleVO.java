@@ -14,6 +14,7 @@ import java.util.List;
  * 甘特图任务安排数据处理
  */
 public class GannttScheduleVO {
+
     private  Integer scheduleId;
 
     private Date beginTime;
@@ -94,7 +95,7 @@ public class GannttScheduleVO {
         this.preTaskList = preTaskList;
     }
 
-    public static GannttScheduleVO ganttSchedule(List<Record> records,Long taskId){
+    public static GannttScheduleVO ganttSchedule(List<Record> records,Long taskId, List<PreTask>  preList){
         List<Staff> staffLists= new ArrayList<>();
         GannttScheduleVO scheduleVO=new GannttScheduleVO();
         //同一任务中有多个员工执行时具有多条任务安排信息，获取多条任务安排信息中相同部分
@@ -115,8 +116,6 @@ public class GannttScheduleVO {
             staffLists.add(staff);
             scheduleVO.setStaffList(staffLists);
         }
-        //同一个任务安排中多个前置任务整合成一个preList
-        List<PreTask>  preList=PreTask.dao.find(SQL.SELECT_PRETASK_BY_TASKID,taskId);
         if (preList.size()>0) {
             scheduleVO.setPreTaskList(preList);
         }

@@ -4,8 +4,7 @@ import com.jimi.ozone_server.exception.OperationException;
 import com.jimi.ozone_server.model.Project;
 import com.jimi.ozone_server.model.Staff;
 import com.jimi.ozone_server.model.sql.SQL;
-import com.jimi.ozone_server.util.ResultUtil;
-
+import com.jimi.ozone_server.util.ResultFactory;
 import java.util.Date;
 import java.util.List;
 
@@ -14,18 +13,17 @@ import java.util.List;
  */
 public class ProjectService {
 
-
-    public ResultUtil deleted(Integer id){
+    public ResultFactory deleted(Integer id){
         Project project =Project.dao.findById(id);
         if (project==null){
             throw new OperationException("项目不存在");
         }
         project.setDeleted(true);
         project.update();
-        return  ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
-    public ResultUtil add(String name, Date beginTime,Date endTime,Integer manager){
+    public ResultFactory add(String name, Date beginTime, Date endTime, Integer manager){
         if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size()!=0){
             throw new OperationException("项目已存在");
         }
@@ -39,11 +37,10 @@ public class ProjectService {
         p.setManager(Long.valueOf(manager));
         p.setDeleted(false);
         p.save();
-        return ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
-
-    public  ResultUtil update(Integer id,String name, Date beginTime,Date endTime,Integer manager){
+    public ResultFactory update(Integer id, String name, Date beginTime, Date endTime, Integer manager){
         Project project =Project.dao.findById(id);
         if (project!=null){
             if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size()!=0){
@@ -60,7 +57,7 @@ public class ProjectService {
         }else {
            throw new OperationException("项目不存在");
         }
-        return ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
     public List<Project> getList(){

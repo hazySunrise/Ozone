@@ -4,45 +4,45 @@ package com.jimi.ozone_server.util;
  * 返回一个带result字段和data字段的json，result为succeed时，data为正常数据；result为failed时，data为错误信息
  * 
  */
-public class ResultUtil {
+public class ResultFactory {
 
 	private int result;
 	private Object data;
 
 
-	public static ResultUtil succeed() {
+	public static ResultFactory succeed() {
 		return succeed("操作成功");
 	}
 
 
-	public static ResultUtil succeed(Object data) {
-		ResultUtil resultUtil = new ResultUtil();
-		resultUtil.result = 200;
-		resultUtil.data = data;
-		return resultUtil;
+	public static ResultFactory succeed(Object data) {
+		ResultFactory resultFactory = new ResultFactory();
+		resultFactory.result = 200;
+		resultFactory.data = data;
+		return resultFactory;
 	}
 
 
-	public static ResultUtil failed() {
+	public static ResultFactory failed() {
 		return failed("操作失败");
 	}
 
 
-	public static ResultUtil failed(int result) {
+	public static ResultFactory failed(int result) {
 		return failed(result, "操作失败");
 	}
 
 
-	public static ResultUtil failed(Object errorMsg) {
+	public static ResultFactory failed(Object errorMsg) {
 		return failed(500, errorMsg);
 	}
 
 
-	public static ResultUtil failed(int result, Object errorMsg) {
-		ResultUtil resultUtil = new ResultUtil();
-		resultUtil.result = result;
-		resultUtil.data = errorMsg;
-		return resultUtil;
+	public static ResultFactory failed(int result, Object errorMsg) {
+		ResultFactory resultFactory = new ResultFactory();
+		resultFactory.result = result;
+		resultFactory.data = errorMsg;
+		return resultFactory;
 	}
 
 

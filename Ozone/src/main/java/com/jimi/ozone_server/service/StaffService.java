@@ -4,7 +4,7 @@ import com.jimi.ozone_server.exception.OperationException;
 import com.jimi.ozone_server.model.Group;
 import com.jimi.ozone_server.model.Staff;
 import com.jimi.ozone_server.model.sql.SQL;
-import com.jimi.ozone_server.util.ResultUtil;
+import com.jimi.ozone_server.util.ResultFactory;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class StaffService {
 
-    public ResultUtil add(String name,Integer groupId){
+    public ResultFactory add(String name, Integer groupId){
         if (Group.dao.findById(groupId)==null){
             throw new OperationException("小组不存在");
         }
@@ -22,21 +22,20 @@ public class StaffService {
         staff.setGroupId(Long.valueOf(groupId));
         staff.setName(name);
         staff.save();
-        return  ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
-
-    public  ResultUtil delete(Integer id){
+    public ResultFactory delete(Integer id){
         Staff staff=Staff.dao.findById(id);
         if (staff==null){
-            throw new  OperationException("该员工不存在");
+            throw new OperationException("该员工不存在");
         }
         staff.setDeleted(true);
         staff.update();
-        return  ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
-    public ResultUtil update(Integer id,String name,Integer groupId){
+    public ResultFactory update(Integer id, String name, Integer groupId){
         Staff staff=Staff.dao.findById(id);
         if (staff==null){
             throw new  OperationException("该员工不存在");
@@ -47,7 +46,7 @@ public class StaffService {
         staff.setName(name);
         staff.setGroupId(Long.valueOf(groupId));
         staff.update();
-        return  ResultUtil.succeed();
+        return ResultFactory.succeed();
     }
 
     public List<Staff> getStaff(Integer groupId){
@@ -57,5 +56,4 @@ public class StaffService {
        List<Staff> staffs=Staff.dao.find(SQL.SELECT_STAFF_BY_GROUPID,groupId);
         return staffs;
     }
-
 }

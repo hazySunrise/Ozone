@@ -1,10 +1,7 @@
 package com.jimi.ozone_server.model.vo;
 
-import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.Record;
 import com.jimi.ozone_server.model.Project;
 import com.jimi.ozone_server.model.Staff;
-import com.jimi.ozone_server.model.sql.SQL;
 
 import java.util.Date;
 import java.util.List;
@@ -22,8 +19,7 @@ public class GanttVO {
 
     private int period;
 
-   private  List<TypeVO> typeList;
-
+    private  List<TypeVO> typeList;
 
     public Long getId() {
         return id;
@@ -81,13 +77,12 @@ public class GanttVO {
         this.typeList = typeList;
     }
 
-    public static GanttVO gantt(Integer projectId){
+    public static GanttVO gantt(Integer projectId,List<TypeVO> typeVoList){
         Project project=Project.dao.findById(projectId);
-
         GanttVO ganttVO=new GanttVO();
         ganttVO.setId(project.getId());
         ganttVO.setName(project.getName());
-        Date  beginTime=project.getBeginTime();
+        Date beginTime=project.getBeginTime();
         Date endTime=project.getEndTime();
         ganttVO.setBeginTime(beginTime);
         ganttVO.setEndTime(endTime);
@@ -95,9 +90,7 @@ public class GanttVO {
         ganttVO.setPeriod(day);
         Long manager=project.getManager();
         ganttVO.setManager(Staff.dao.findById(manager).getName());
-        List<Record> typeList= Db.find(SQL.SELECT_TYPE_BY_GROUPID,projectId);//获取项目下所有的任务类型
-        List<TypeVO> typeVoList= TypeVO.fillList(typeList);
         ganttVO.setTypeList(typeVoList);
-        return  ganttVO;
+        return ganttVO;
    }
 }
