@@ -7,19 +7,19 @@ import java.util.Date;
 import java.util.List;
 
 public class GanttVO {
-    private  Long id;
+    private Long id;
 
-    private  String name;
+    private String name;
 
-    private  String manager;
+    private String manager;
 
     private Date beginTime;
 
-    private  Date endTime;
+    private Date endTime;
 
     private int period;
 
-    private  List<TypeVO> typeList;
+    private List<TypeVO> typeList;
 
     public Long getId() {
         return id;
@@ -78,17 +78,17 @@ public class GanttVO {
     }
 
     public static GanttVO gantt(Integer projectId,List<TypeVO> typeVoList){
-        Project project=Project.dao.findById(projectId);
-        GanttVO ganttVO=new GanttVO();
+        Project project = Project.dao.findById(projectId);
+        GanttVO ganttVO = new GanttVO();
         ganttVO.setId(project.getId());
         ganttVO.setName(project.getName());
-        Date beginTime=project.getBeginTime();
-        Date endTime=project.getEndTime();
+        Date beginTime = project.getBeginTime();
+        Date endTime = project.getEndTime();
         ganttVO.setBeginTime(beginTime);
         ganttVO.setEndTime(endTime);
         int day = (int)((endTime.getTime()-beginTime.getTime())/(3600*1000*24));//相减的毫秒换算成天数
         ganttVO.setPeriod(day);
-        Long manager=project.getManager();
+        Long manager = project.getManager();
         ganttVO.setManager(Staff.dao.findById(manager).getName());
         ganttVO.setTypeList(typeVoList);
         return ganttVO;

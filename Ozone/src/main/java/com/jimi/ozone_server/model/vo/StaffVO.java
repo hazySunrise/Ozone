@@ -7,11 +7,11 @@ import java.util.List;
 
 public class StaffVO {
 
-    private  int id;
+    private int id;
 
     private String name;
 
-    private  List<ScheduleVO> taskList;
+    private List<ScheduleVO> taskList;
 
     public int getId() {
         return id;
@@ -38,7 +38,7 @@ public class StaffVO {
     }
 
     public static List<StaffVO> fillList(List<Record> records){
-        List<StaffVO> staffVOs=new ArrayList<>();
+        List<StaffVO> staffVOs = new ArrayList<>();
         for (Record record : records) {
             StaffVO staffVO=new StaffVO();
             int staffId=record.getInt("id");

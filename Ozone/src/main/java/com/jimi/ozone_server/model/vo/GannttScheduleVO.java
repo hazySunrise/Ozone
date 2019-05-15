@@ -15,15 +15,15 @@ import java.util.List;
  */
 public class GannttScheduleVO {
 
-    private  Integer scheduleId;
+    private Integer scheduleId;
 
     private Date beginTime;
 
-    private  Date endTime;
+    private Date endTime;
 
-    private  Date finishTime;
+    private Date finishTime;
 
-    private  String taskName;
+    private String taskName;
 
     private Long  taskId;
 
@@ -96,8 +96,8 @@ public class GannttScheduleVO {
     }
 
     public static GannttScheduleVO ganttSchedule(List<Record> records,Long taskId, List<PreTask>  preList){
-        List<Staff> staffLists= new ArrayList<>();
-        GannttScheduleVO scheduleVO=new GannttScheduleVO();
+        List<Staff> staffLists = new ArrayList<>();
+        GannttScheduleVO scheduleVO = new GannttScheduleVO();
         //同一任务中有多个员工执行时具有多条任务安排信息，获取多条任务安排信息中相同部分
         if (records.size()>0) {
             scheduleVO.setScheduleId(records.get(0).getInt("id"));
@@ -105,14 +105,14 @@ public class GannttScheduleVO {
             scheduleVO.setFinishTime(records.get(0).getDate("finish_time"));
             scheduleVO.setEndTime(records.get(0).getDate("end_time"));
         }
-        if(taskId!=null) {
+        if(taskId != null) {
             scheduleVO.setTaskId(taskId);
             scheduleVO.setTaskName(Task.dao.findById(taskId).getName());
         }
         //同一个任务安排中多个员工信息整合成一个staffLists
         for (Record record : records) {
-            Integer staffId=record.getInt("staff_id");
-            Staff staff=Staff.dao.findFirst(SQL.SELECT_STAFF_BY_ID,staffId);
+            Integer staffId = record.getInt("staff_id");
+            Staff staff = Staff.dao.findFirst(SQL.SELECT_STAFF_BY_ID,staffId);
             staffLists.add(staff);
             scheduleVO.setStaffList(staffLists);
         }

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TypeVO {
-    private  int id;
+    private int id;
 
-    private  String name;
+    private String name;
 
     private List<GannttScheduleVO> taskList;
 

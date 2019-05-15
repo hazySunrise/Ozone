@@ -70,19 +70,19 @@ public class ScheduleVO {
     }
 
     public static List<ScheduleVO> fillList(List<Record> records){
-        List<ScheduleVO> scheduleVOs=new ArrayList<>();
+        List<ScheduleVO> scheduleVOs = new ArrayList<>();
         for (Record record : records) {
-            ScheduleVO staffVO=new ScheduleVO();
+            ScheduleVO staffVO = new ScheduleVO();
             staffVO.setId(record.getInt("id"));
             staffVO.setBeginTime(record.getDate("begin_time"));
-            Date finisTime=record.getDate("finish_time");
-            if (finisTime!=null){
+            Date finisTime = record.getDate("finish_time");
+            if (finisTime != null){
                 staffVO.setFinishTime(finisTime);
             }else {
                 staffVO.setFinishTime(record.getDate("end_time"));
             }
-            int projectId=record.getInt("project_id");
-            int taskId=record.getInt("task_id");
+            int projectId = record.getInt("project_id");
+            int taskId = record.getInt("task_id");
             staffVO.setTaskId(taskId);
             staffVO.setProjectName(Project.dao.findById(projectId).getName());
             staffVO.setTaskName(Task.dao.findById(taskId).getName());

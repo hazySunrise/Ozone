@@ -12,33 +12,33 @@ import com.jimi.ozone_server.util.ResultFactory;
  * 小组管理控制层
  */
 public class GroupController extends Controller {
-    private  static GroupService  groupService=Enhancer.enhance(GroupService.class);
+    private  static GroupService  groupService = Enhancer.enhance(GroupService.class);
 
     //增加小组
     @Log("增加name为{name}的小组")
     public void add(String name){
-        if (name==null){
+        if (name == null){
             throw new ParameterException("参数不能为空");
         }
-        ResultFactory resultFactory=groupService.add(name);
+        ResultFactory resultFactory = groupService.add(name);
         renderJson(resultFactory);
     }
 
     @Log("对id为{id}的小组进行逻辑删除")
     public void delete(Integer id){
-        if (id==null){
+        if (id == null){
             throw new ParameterException("参数不能为空");
         }
-        ResultFactory resultFactory=groupService.delete(id);
+        ResultFactory resultFactory = groupService.delete(id);
         renderJson(resultFactory);
     }
 
     @Log("更新id为{id}的小组信息，更新后的小组名为{name}")
     public  void update(Integer id,String name){
-        if (id==null||name==null){
+        if (id == null||name == null){
             throw new ParameterException("参数不能为空");
         }
-        ResultFactory resultFactory=groupService.update(id,name);
+        ResultFactory resultFactory = groupService.update(id,name);
         renderJson(resultFactory);
     }
 

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.Jimi</groupId>
+    <groupId>com.jimi</groupId>
     <artifactId>Ozone</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -19,7 +19,7 @@
             <!-- Maven 自带的中央仓库使用的Id为central 如果其他的仓库声明也是用该Id 就会覆盖中央仓库的配置 -->
             <id>nexus</id>
             <name>nexus</name>
-            <url>http://183.236.111.164:6081/repository/maven-releases/</url>
+            <url>http://10.10.11.90:8081/repository/maven-releases/</url>
         </repository>
     </repositories>
 

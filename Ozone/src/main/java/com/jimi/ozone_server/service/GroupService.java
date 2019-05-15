@@ -14,8 +14,8 @@ import java.util.List;
 public class GroupService {
 
     public ResultUtil delete(Integer id){
-        Group group =Group.dao.findById(id);
-        if (group==null){
+        Group group = Group.dao.findById(id);
+        if (group == null){
             throw new OperationException("小组不存在");
         }
         group.setDeleted(true);
@@ -27,7 +27,7 @@ public class GroupService {
         if (Group.dao.find(SQL.SELECT_GROUP_BY_NAME,name).size()!=0){
             throw new  OperationException("小组已存在");
         }
-        Group group=new Group();
+        Group group = new Group();
         group.setName(name);
         group.setDeleted(false);
         group.save();
@@ -36,7 +36,7 @@ public class GroupService {
 
     public ResultUtil update(Integer id,String name){
         Group group=Group.dao.findById(id);
-        if (group==null){
+        if (group == null){
             throw new  OperationException("小组不存在");
         }
         if (Group.dao.find(SQL.SELECT_GROUP_BY_NAME,name).size()!=0){
@@ -48,7 +48,7 @@ public class GroupService {
     }
 
     public List<Group> getList(){
-       List<Group> groups=Group.dao.find(SQL.SELECT_ALL_GROUP);
+       List<Group> groups = Group.dao.find(SQL.SELECT_ALL_GROUP);
        return groups;
     }
 }

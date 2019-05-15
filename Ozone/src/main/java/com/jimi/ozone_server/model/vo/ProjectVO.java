@@ -8,15 +8,15 @@ import java.util.Date;
 import java.util.List;
 
 public class ProjectVO {
-    private  int id;
+    private int id;
 
     private String  name;
 
     private Date beginTime;
 
-    private  Date endTime;
+    private Date endTime;
 
-    private  String manager;
+    private String manager;
 
     public boolean deleted;
 
@@ -47,7 +47,7 @@ public class ProjectVO {
     }
 
     public static List<ProjectVO> fillList(List<Record> records){
-        List<ProjectVO> projectVOs=new ArrayList<>();
+        List<ProjectVO> projectVOs = new ArrayList<>();
         for (Record record : records) {
             ProjectVO projectVO=new ProjectVO();
             projectVO.setId(record.getInt("id"));

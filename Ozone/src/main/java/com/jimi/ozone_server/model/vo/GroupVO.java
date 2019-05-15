@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupVO {
-    private  int id;
+    private int id;
 
-    private  String name;
+    private String name;
 
     public void setId(int id) {
         this.id = id;
@@ -19,13 +19,13 @@ public class GroupVO {
     }
 
     public static List<GroupVO> fillList(List<Record> records){
-        List<GroupVO> groupVOs=new ArrayList<>();
+        List<GroupVO> groupVOs = new ArrayList<>();
         for (Record record : records) {
-            GroupVO groupVO=new GroupVO();
+            GroupVO groupVO = new GroupVO();
             groupVO.setId(record.getInt("id"));
             groupVO.setName(record.getStr("name"));
             groupVOs.add(groupVO);
         }
-        return  groupVOs;
+        return groupVOs;
     }
 }

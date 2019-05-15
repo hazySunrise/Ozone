@@ -14,8 +14,8 @@ import java.util.List;
 public class ProjectService {
 
     public ResultFactory deleted(Integer id){
-        Project project =Project.dao.findById(id);
-        if (project==null){
+        Project project = Project.dao.findById(id);
+        if (project == null){
             throw new OperationException("项目不存在");
         }
         project.setDeleted(true);
@@ -24,13 +24,13 @@ public class ProjectService {
     }
 
     public ResultFactory add(String name, Date beginTime, Date endTime, Integer manager){
-        if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size()!=0){
+        if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size()!= 0){
             throw new OperationException("项目已存在");
         }
-        if (Staff.dao.findById(manager)==null){
+        if (Staff.dao.findById(manager) == null){
             throw new OperationException("该人不存在");
         }
-        Project p=new Project();
+        Project p = new Project();
         p.setName(name);
         p.setBeginTime(beginTime);
         p.setEndTime(endTime);
@@ -41,12 +41,12 @@ public class ProjectService {
     }
 
     public ResultFactory update(Integer id, String name, Date beginTime, Date endTime, Integer manager){
-        Project project =Project.dao.findById(id);
-        if (project!=null){
-            if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size()!=0){
+        Project project = Project.dao.findById(id);
+        if (project != null){
+            if (Project.dao.find(SQL.SELECT_PROJECT_BY_NAME,name).size() != 0){
                 throw new OperationException("项目已存在");
             }
-            if (Staff.dao.findById(manager)==null){
+            if (Staff.dao.findById(manager) == null){
                 throw new OperationException("该人不存在");
             }
             project.setName(name);
@@ -61,7 +61,7 @@ public class ProjectService {
     }
 
     public List<Project> getList(){
-       List<Project> projects=Project.dao.find(SQL.SELECT_ALL_PROJECT);
+       List<Project> projects = Project.dao.find(SQL.SELECT_ALL_PROJECT);
         return projects;
     }
 }

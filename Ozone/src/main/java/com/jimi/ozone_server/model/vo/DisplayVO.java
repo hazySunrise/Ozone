@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DisplayVO {
 
-    private  Integer id;
+    private Integer id;
 
     private String groupName;
 
@@ -41,7 +41,7 @@ public class DisplayVO {
         List<DisplayVO> displayVOs = new ArrayList<DisplayVO>();
         for (Record record : records) {
             DisplayVO displayVO = new DisplayVO();
-            int groupId=record.getInt("id");
+            int groupId = record.getInt("id");
             displayVO.setId(groupId);
             displayVO.setGroupName(record.getStr("name"));
             displayVO.setStaffList(record.get("staffList"));

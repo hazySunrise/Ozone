@@ -14,10 +14,10 @@ import java.util.List;
 public class StaffService {
 
     public ResultFactory add(String name, Integer groupId){
-        if (Group.dao.findById(groupId)==null){
+        if (Group.dao.findById(groupId) == null){
             throw new OperationException("小组不存在");
         }
-        Staff staff=new Staff();
+        Staff staff = new Staff();
         staff.setDeleted(false);
         staff.setGroupId(Long.valueOf(groupId));
         staff.setName(name);
@@ -26,8 +26,8 @@ public class StaffService {
     }
 
     public ResultFactory delete(Integer id){
-        Staff staff=Staff.dao.findById(id);
-        if (staff==null){
+        Staff staff = Staff.dao.findById(id);
+        if (staff == null){
             throw new OperationException("该员工不存在");
         }
         staff.setDeleted(true);
@@ -36,11 +36,11 @@ public class StaffService {
     }
 
     public ResultFactory update(Integer id, String name, Integer groupId){
-        Staff staff=Staff.dao.findById(id);
-        if (staff==null){
+        Staff staff = Staff.dao.findById(id);
+        if (staff == null){
             throw new  OperationException("该员工不存在");
         }
-        if (Group.dao.findById(groupId)==null){
+        if (Group.dao.findById(groupId) == null){
             throw new OperationException("小组不存在");
         }
         staff.setName(name);
@@ -50,10 +50,10 @@ public class StaffService {
     }
 
     public List<Staff> getStaff(Integer groupId){
-        if (Group.dao.findById(groupId)==null){
+        if (Group.dao.findById(groupId) == null){
             throw new OperationException("小组不存在");
         }
-       List<Staff> staffs=Staff.dao.find(SQL.SELECT_STAFF_BY_GROUPID,groupId);
+       List<Staff> staffs = Staff.dao.find(SQL.SELECT_STAFF_BY_GROUPID,groupId);
         return staffs;
     }
 }
