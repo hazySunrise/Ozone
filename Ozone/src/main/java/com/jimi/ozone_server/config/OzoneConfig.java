@@ -12,7 +12,6 @@ import com.jimi.ozone_server.interceptor.ActionLogInterceptor;
 import com.jimi.ozone_server.interceptor.CORSInterceptor;
 import com.jimi.ozone_server.interceptor.ErrorLogInterceptor;
 import com.jimi.ozone_server.model.MappingKit;
-import com.jimi.ozone_server.util.TokenBox;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
 
@@ -74,9 +73,10 @@ public class OzoneConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
-        me.addGlobalActionInterceptor(new ActionLogInterceptor());
-        me.addGlobalActionInterceptor(new CORSInterceptor());
+        //具有先后顺序
         me.addGlobalActionInterceptor(new ErrorLogInterceptor());
+        me.addGlobalActionInterceptor(new CORSInterceptor());
+        me.addGlobalActionInterceptor(new ActionLogInterceptor());
     }
 
     @Override
@@ -86,12 +86,10 @@ public class OzoneConfig extends JFinalConfig {
 
     @Override
     public void beforeJFinalStop() {
-        TokenBox.stop();
     }
 
     @Override
     public void afterJFinalStart() {
-        TokenBox.start(48);
         //设置日志等级
         Configurator.setRootLevel(level);
     }
